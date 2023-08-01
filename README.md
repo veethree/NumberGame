@@ -19,3 +19,6 @@ Even more alternatively, You can download the [löve android build setup](https:
 
 ## iOS
 I have no plans to support IOS, But theoretically the game should work on iOS. You'd just have to figure out how to [build](https://love2d.org/wiki/Getting_Started#iOS) it
+
+# Third party libraries
+[flux.lua](https://github.com/rxi/flux) by rxi
