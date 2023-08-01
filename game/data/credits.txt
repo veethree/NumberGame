@@ -1,0 +1,5 @@
+[Third party libraries]
+Flux.lua, rxi, https://github.com/rxi/flux
+
+[Fonts]
+monofonto_rg.otf ,Typodermic Fonts Inc. ,https://www.1001fonts.com/monofonto-font.html
