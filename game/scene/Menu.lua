@@ -3,27 +3,18 @@ local Menu = class()
 
 function Menu:init()
     self.logo = Image(image.logo, 0, -SAFE.height, SAFE.width * 0.0009):centerHorizontal()
-    flux.to(self.logo, config.window.animationScale * 4, {y = SAFE.y + (SAFE.height * 0.01)})
+    flux.to(self.logo, config.window.animationScale * 2, {y = SAFE.y + (SAFE.height * 0.01)})
 
     self.version = Text("v" .. VERSION, 0, -lg.getHeight(), font.small, color[16], "right")
-    flux.to(self.version, config.window.animationScale * 4.2, {y = SAFE.y + (SAFE.height * 0.07)})
+    flux.to(self.version, config.window.animationScale * 2.2, {y = SAFE.y + (SAFE.height * 0.07)})
 
     self.greeting = Text(util.randomLine("game/data/greetings.txt"), 0, -lg.getHeight(), font.medium, color[20], "center")
-    flux.to(self.greeting, config.window.animationScale * 3.8, {y = SAFE.y + (SAFE.height * 0.39)})
+    flux.to(self.greeting, config.window.animationScale * 1.9, {y = SAFE.y + (SAFE.height * 0.39)})
 
     local topGuiY = lg.getHeight() * 0.02 + SAFE.y
     self.ui = {
         Button("Play", 0, lg.getHeight() * 0.5, lg.getWidth() * 0.8, lg.getHeight() * 0.1, color[util.offsetColorIndex(1)]):setFunction(function()
-
-            flux.to(self.logo, config.window.animationScale * 4, {y = -SAFE.height})
-            flux.to(self.version, config.window.animationScale * 4, {y = -SAFE.height})
-            flux.to(self.greeting, config.window.animationScale * 4, {y = -SAFE.height})
-            flux.to(self, config.window.animationScale, {anim = 0})
-
-            for i,v in ipairs(self.ui) do
-                v:hide()
-            end
-
+            self:unload()
 
             later(function()
                 Scene:loadScene(scene.Game)
@@ -32,25 +23,13 @@ function Menu:init()
         Button("Exit", 0, lg.getHeight() * 0.65, lg.getWidth() * 0.8, lg.getHeight() * 0.1, color[util.offsetColorIndex(16)]):setFunction(function()
             love.event.push("quit")
         end),
-        Button("Clear Savegame", 0, SAFE.y + SAFE.height * 0.9, SAFE.width * 0.5, SAFE.width * 0.1, color[util.offsetColorIndex(15)], font.small, true):setFunction(function()
-            config = defaultConfig
-            util.save(config, "config.lua")
+        Button("Settings", 0, SAFE.y + SAFE.height * 0.9, SAFE.width * 0.5, SAFE.width * 0.1, color[util.offsetColorIndex(15)], font.small, true):setFunction(function()
+            self:unload()
+
+            later(function()
+                Scene:loadScene(scene.Settings)
+            end, config.window.animationScale)
         end),
-
-        -- Button("!", lg.getWidth() - ((lg.getHeight() * 0.08) + (lg.getWidth() * 0.05)), topGuiY, lg.getHeight() * 0.08, lg.getHeight() * 0.08, color[10]):setFunction(function()
-        --     self:showCredits()
-        -- end),
-
-        -- Button("Theme", SAFE.width * 0.05, SAFE.y + SAFE.height * 0.03, SAFE.width * 0.15, SAFE.width * 0.1, color[util.offsetColorIndex(20)], font.small, true):setFunction(function()
-        --     config.window.colorTheme = config.window.colorTheme + 1
-        --     if config.window.colorTheme > 3 then
-        --         config.window.colorTheme = 1
-        --     end
-
-        --     self.board:forceColorUpdate()
-        --     background:forceColorUpdate()
-        -- end),
-        -- Button("Exit", 0, lg.getHeight() * 0.8, lg.getWidth() * 0.8, lg.getHeight() * 0.1, color[titleColor])
     }
     
     self.ui[1]:centerHorizontal()
@@ -60,11 +39,6 @@ function Menu:init()
     for i,v in ipairs(self.ui) do
         v:show()
     end
-
-    self.board = Board(4, 8)
-    self.board:place(0, 0, lg.getWidth(), lg.getHeight())
-    self.board:randomize()
-
     -- self.background = Background()
 
     self.anim = 0
@@ -83,6 +57,17 @@ function Menu:load()
     -- self.titleB:move(false, self.titleBPosition, 1)
 
     flux.to(self, config.window.animationScale, {anim = 1})
+end
+
+function Menu:unload()
+    flux.to(self.logo, config.window.animationScale * 4, {y = -SAFE.height})
+    flux.to(self.version, config.window.animationScale * 4, {y = -SAFE.height})
+    flux.to(self.greeting, config.window.animationScale * 4, {y = -SAFE.height})
+    flux.to(self, config.window.animationScale, {anim = 0})
+
+    for i,v in ipairs(self.ui) do
+        v:hide()
+    end
 end
 
 function Menu:update(dt)

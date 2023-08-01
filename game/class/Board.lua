@@ -91,7 +91,7 @@ function board:hide()
             self.cell[y][x]:hide()
         end
     end
-    flux.to(self, config.window.animationScale * 2.5, {scale = 0})
+    flux.to(self, config.window.animationScale * 2, {scale = 0})
 end
 
 function board:movesLeft()
@@ -244,9 +244,11 @@ function board:mousepressed(x, y)
                     sound.tick:play()
                     if not cell.selected then
                         cell:select()
+                        sound.rise:play()
                         table.insert(self.selectedCells, cell)
                     else
                         cell:deselect()
+                        sound.fall:play()
                         for i,v in ipairs(self.selectedCells) do
                             if v == cell then
                                 table.remove(self.selectedCells, i)

@@ -47,7 +47,7 @@ function Game:load()
             self.ui.exit:hide()
             self.scoreTitle:move(false, -SAFE.height, 1)
             self.scoreText:move(false, -SAFE.height, 1)
-            flux.to(self, config.window.animationScale * 4, {anim = 0}):oncomplete(function()
+            flux.to(self, config.window.animationScale * 2, {anim = 0}):oncomplete(function()
                 config.game.savedBoardState = self.board:saveState()
                 config.game.savedScore = self.score
                 Scene:loadScene(scene.Menu)

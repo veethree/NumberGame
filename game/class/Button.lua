@@ -39,6 +39,7 @@ end
 function button:mousepressed(x, y, k)
     if self.scale == 1 then
         if maf.pointInRect(x, y, self.x, self.y, self.width, self.height) then
+            sound.tick:play()
             if self.fn then
                 self.fn(self)
                 if self.animated then

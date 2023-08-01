@@ -88,6 +88,7 @@ function cell:setValue(val, instant)
             self.value = val
             self.printValue = val
             self:updateColor() 
+            sound.swish:play()
             flux.to(self, config.window.animationScale * 1, {transition = 0})
         end)
     end

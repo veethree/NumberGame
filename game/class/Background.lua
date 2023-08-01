@@ -25,13 +25,15 @@ function background:update(dt)
 end
 
 function background:draw()
-    for _, particle in ipairs(self.particle) do
-        particle:draw()
-    end
+    if config.window.background then
+        for _, particle in ipairs(self.particle) do
+            particle:draw()
+        end
 
-    local r, g, b = lg.getBackgroundColor()
-    lg.setColor(r, g, b, 0.8)
-    lg.rectangle("fill", 0, 0, lg.getWidth(), lg.getHeight())
+        local r, g, b = lg.getBackgroundColor()
+        lg.setColor(r, g, b, 0.8)
+        lg.rectangle("fill", 0, 0, lg.getWidth(), lg.getHeight())
+    end
 end
 
 return background

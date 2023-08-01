@@ -16,6 +16,9 @@ return {
         hintTime = 10,
         colorTheme = 1,
         colorPaletteSize = 20,
+        music = true,
+        soundFX = true,
+        background = true,
         settings = {
             fullscreen = false,
             resizable = false,

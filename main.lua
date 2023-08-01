@@ -1,6 +1,6 @@
 -- GLOBAL SETTINGS
 NAME = "Number Game"
-VERSION = "0.3a"
+VERSION = "0.3c"
 DEBUG_MODE = true
 USE_CONFIG = true -- If false the defaultConfig file is always used.
 USE_SHADERS = false
@@ -38,10 +38,10 @@ function love.load()
     -- Loading config file
     defaultConfig = util.load("game/defaultConfig.lua")
     if USE_CONFIG then 
-        config = util.load("config.lua") or defaultConfig 
+        config = util.load("config.lua") or util.deepcopy(defaultConfig)
         util.save(config, "config.lua")
     else 
-        config = defaultConfig 
+        config = util.deepcopy(defaultConfig)
     end
 
     fixConfig()
@@ -55,6 +55,8 @@ function love.load()
 
     --Loading libraries
     util.requireDirectory("lib")
+
+    exString:import()
 
     -- Loading classes
     util.requireDirectory("game/class")
@@ -85,9 +87,22 @@ function love.load()
     }
 
     -- Loading sounds
-    sound = {
-        tick = Sound("game/art/sound/tick.ogg")
-    }
+    sound = {}
+    for _, file in ipairs(fs.getDirectoryItems("game/art/sound")) do
+        if util.getFileType(file) == "ogg" then
+            local type = "static"
+            local name = util.getFileName(file)
+            if file:startsWith("music_") then
+                type = "stream"
+                name = name:replace("music_", "")
+            end
+            sound[name] = Sound("game/art/sound/" .. file, type)
+        end
+    end
+
+    currentSong = sound.morning
+    currentSong:loop()
+    currentSong:play()
     
     -- Calling resize to calculate the scale values
     resize()
@@ -110,17 +125,23 @@ end
 
 function saveConfig()
     util.save(config, "config.lua")
+    print("Config saved")
 end
 
 function fixConfig()
+    local fixingRequired = false
     for o,b in pairs(defaultConfig) do
         for k,v in pairs(b) do
-            if not config[o][k] then
+            if config[o][k] == nil then
                 config[o][k] = v
+                print("Missing config key: " .. k)
+                fixingRequired = true
             end
-        end 
+        end
     end
-    saveConfig()
+    if fixingRequired then
+        saveConfig()
+    end
 end
 
 function love.update(dt)
@@ -198,7 +219,7 @@ function love.keypressed(key)
     if key == "escape" and DEBUG_MODE then love.event.push("quit") end
 
     if key == "e" then
-        error("pussyjuice")
+        error("ass")
     end
 
     if key == "f1" then
