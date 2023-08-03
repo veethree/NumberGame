@@ -10,10 +10,11 @@ A mobile puzzle game inspired by 2048 and various tile matching games. Match til
 Number Game was created with [löve](https://love2d.org/). Specifically version 11.4. For more information on how to run löve games see [this](https://love2d.org/wiki/Getting_Started) article on the wiki.
 
 ## Android
-I am currently in the process of publishing on the play store, In the meantime there's an APK in the releases that you can install. Your phone will complain that it's from an untrusted developer. You will 
-probably need to enable installing apps from unknown sources.
+It's available on the [play store](https://play.google.com/store/apps/details?id=com.veethreedev.numbergame)
 
-Alternatively you can install [Löve for android](https://play.google.com/store/apps/details?id=org.love2d.android&hl=en&gl=US). There are instructions there on how to run a game.
+I also provide an .APK here in the releases, But your phone will complain about it being unsafe and stuff. Up to you if you wanna go down that route
+
+Alternatively you can install [Löve for android](https://play.google.com/store/apps/details?id=org.love2d.android&hl=en&gl=US), and run the .love. There are instructions on the store listing on how to do that.
 
 Even more alternatively, You can download the [löve android build setup](https://github.com/love2d/love-android) and build your own apk with [android studio](https://developer.android.com/studio).
 
