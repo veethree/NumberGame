@@ -327,6 +327,9 @@ function love.errorhandler(msg)
 
 	if love.system then
 		p = p .. "\n\nPress Ctrl+C or tap to copy this error"
+		p = p .. "\n\n\n\nIf you'd like to report this error,"
+		p = p .. "\nYou can send a copy / screenshot to 'veethreedev@gmail.com'"
+
 	end
 
 	return function()

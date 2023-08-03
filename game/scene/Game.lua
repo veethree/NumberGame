@@ -16,9 +16,9 @@ function Game:load()
     self.scoreText = Text("0", 0, -lg.getHeight(), font.huger, color[util.offsetColorIndex(1)], "center")
 
     -- Game Over
-    self.gameOverTitle = Text("GAME OVER", 0, -lg.getHeight(), font.huger, color[util.offsetColorIndex(9)], "center")
-    self.gameOverText = Text("GAME OVER", 0, -lg.getHeight(), font.large, color[util.offsetColorIndex(14)], "center")
-    self.resetText = Text("Tap to reset", 0, lg.getHeight() * 2, font.medium, color[util.offsetColorIndex(4)], "center")
+    self.gameOverTitle = Text("GAME OVER", 0, -lg.getHeight(), font.huger, color[util.offsetColorIndex(16)], "center")
+    self.gameOverText = Text("GAME OVER", 0, -lg.getHeight(), font.large, color[util.offsetColorIndex(17)], "center")
+    self.resetText = Text("Tap to reset", 0, lg.getHeight() * 2, font.medium, color[util.offsetColorIndex(1)], "center")
 
     self.helpTitle = Text("Help", 0, -lg.getHeight(), font.huge, color[util.offsetColorIndex(1)], "center")
 
@@ -137,6 +137,16 @@ end
 function Game:unblockInput()
     self.inputBlocked = False
 end
+            -- self.board:hide()
+            -- self.ui.help:hide()
+            -- self.ui.exit:hide()
+            -- self.scoreTitle:move(false, -SAFE.height, 1)
+            -- self.scoreText:move(false, -SAFE.height, 1)
+            -- flux.to(self, config.window.animationScale * 2, {anim = 0}):oncomplete(function()
+            --     config.game.savedBoardState = self.board:saveState()
+            --     config.game.savedScore = self.score
+            --     Scene:loadScene(scene.Menu)
+            -- end)
 
 function Game:over()
     flux.to(self, config.window.animationScale * 5, {anim = 0})
@@ -144,18 +154,18 @@ function Game:over()
     later(function()
         self:unblockInput()
         self.resetText:move(false, lg.getHeight() * 0.9, 1)
-    end, 2)
+    end, config.window.animationScale)
     self.state = "over"
     config.game.savedBoardState = false
     config.game.savedScore = 0
     saveConfig()
     util.save(config, "config.lua")
     later(function()
-        self.board:deselectCells()
+        -- self.board:deselectCells()
         self.board:hide()
         
         self.gameOverText:setText("You scored " .. util.comma(floor(self.score)) .. " points!")
-        self.resetText:setText("Tap to reset, " .. util.randomName())
+        self.resetText:setText("Tap to reset, " .. util.randomLine("game/data/names.txt"))
         -- Animations
         self.scoreTitle:move(false, -SAFE.height, 1)
         self.scoreText:move(false, -SAFE.height, 1)
@@ -166,7 +176,7 @@ function Game:over()
         self.ui.help:hide()
         self.ui.exit:hide()
         self.ui.back:hide()
-    end, 0.2)
+    end, config.window.animationScale)
 end
 
 function Game:update(dt)

@@ -108,9 +108,9 @@ end
 function cell:randomValue(special)
     local type = util.randomChoice({
         normal = 4000,
-        clearColumn = 80,
-        clearRow = 80,
-        clearCross = 80,
+        clearColumn = 50,
+        clearRow = 50,
+        clearCross = 50,
         double = 10,
         quadruple = 5,
     })

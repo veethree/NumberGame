@@ -3,7 +3,7 @@ local class = require "lib.class"
 local sound = class()
 
 function sound:init(filename, type)
-    self.maxSources = 10
+    self.maxSources = 4
     self.type = type
 
     if type == "stream" then
